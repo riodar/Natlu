@@ -1,3 +1,4 @@
+
 name: Build Natlu Android APK
 
 on:
@@ -34,7 +35,9 @@ jobs:
         uses: android-actions/setup-android@v4
 
       - name: Install Android API 37
-        run: sdkmanager "platforms;android-37"
+        run: |
+          yes | sdkmanager --licenses
+          sdkmanager "platforms;android-37.0" "build-tools;37.0.0"
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2.23.0
@@ -52,7 +55,7 @@ jobs:
       - name: Install Flutter dependencies
         run: flutter pub get
 
-      - name: Build debug APK (signed for testing)
+      - name: Build debug APK
         run: flutter build apk --debug
 
       - name: Build release APK
